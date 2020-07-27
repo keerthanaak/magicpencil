@@ -1,11 +1,11 @@
-!wget 'https://raw.githubusercontent.com/googlecreativelab/quickdraw-dataset/master/categories.txt'
+wget 'https://raw.githubusercontent.com/zaidalyafeai/zaidalyafeai.github.io/master/sketcher/mini_classes.txt'
 f = open("categories.txt","r")
 # And for reading use
 classes = f.readlines()
 f.close()
 classes = [c.replace('\n','').replace(' ','_') for c in classes]
 print(classes)
-!mkdir data
+mkdir data
 import urllib
 
 
@@ -117,7 +117,7 @@ model.add(layers.MaxPooling2D(pool_size =(2,2)))
 model.add(layers.Dropout(0.1))
 model.add(layers.Flatten())
 model.add(layers.Dense(512, activation='tanh'))
-model.add(layers.Dense(345, activation='softmax'))
+model.add(layers.Dense(100, activation='softmax'))
 # Train model
 adam = tf.optimizers.Adam()
 model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['top_k_categorical_accuracy'])
@@ -149,14 +149,14 @@ with open('class_names.txt', 'w') as file_handler:
 
 model.save('keras.h5')
 
-!mkdir model
+mkdir model
 
-!cp class_names.txt model/class_names.txt
+cp class_names.txt model/class_names.txt
 
-!zip -r model.zip model
+zip -r model.zip model
 
 print(tf.__version__)
-!tensorflowjs_converter --input_format keras keras.h5 model/
+tensorflowjs_converter --input_format keras keras.h5 model/
 
 from google.colab import files
 files.download('model.zip')
